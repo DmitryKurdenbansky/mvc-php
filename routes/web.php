@@ -1,13 +1,14 @@
 <?
-
 require_once __DIR__ . '/../app/Http/Controllers/TaskController.php';
 use App\Http\Controllers\TaskController;
 
 $routes = [
-    '/test' => [TaskController::class, 'index']
+    '/' => [TaskController::class, 'index']
 ];
 
 $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
+$requestUri = str_replace('/public', '', $requestUri);
+
 if (isset($routes[$requestUri])) {
     [$controller, $method] = $routes[$requestUri];
     (new $controller)->$method();
@@ -16,4 +17,5 @@ if (isset($routes[$requestUri])) {
     echo 'Страница не найдена';
 }
 
-?>
+// public/index.php
+require_once __DIR__ . '/../routes/web.php';
